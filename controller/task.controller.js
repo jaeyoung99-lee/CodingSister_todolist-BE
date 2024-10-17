@@ -46,12 +46,14 @@ taskController.deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
     const deleteTask = await Task.findByIdAndDelete(id);
-    if (deleteTask) {
+    if (!deleteTask) {
       return res
         .status(404)
-        .json({ status: "ok", message: "Task deleted successfully" });
+        .json({ status: "fail", message: "Task not found" });
     }
-    res.status(200).json({ status: "ok" });
+    res
+      .status(200)
+      .json({ status: "ok", message: "Task deleted successfully" });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err });
   }
