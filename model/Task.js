@@ -11,8 +11,12 @@ const taskSchema = Schema(
       type: Boolean,
       required: true,
     },
+    isUrgent: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 const Task = mongoose.model("Task", taskSchema);

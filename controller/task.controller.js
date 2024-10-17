@@ -15,7 +15,7 @@ taskController.createTask = async (req, res) => {
 
 taskController.getTask = async (req, res) => {
   try {
-    const taskList = await Task.find({}).select("-__v");
+    const taskList = await Task.find({});
     res.status(200).json({ status: "ok", data: taskList });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err });
@@ -25,10 +25,10 @@ taskController.getTask = async (req, res) => {
 taskController.updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { isComplete } = req.body;
+    const { isComplete, isUrgent } = req.body;
     const updateTask = await Task.findByIdAndUpdate(
       id,
-      { isComplete },
+      { isComplete, isUrgent },
       { new: true }
     );
     if (!updateTask) {
